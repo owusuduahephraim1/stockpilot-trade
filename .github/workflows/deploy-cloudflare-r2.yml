@@ -1,0 +1,71 @@
+name: StockPilot Trade Cloudflare R2 Worker
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: stockpilot-trade-cloudflare
+  cancel-in-progress: false
+
+jobs:
+  deploy-worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      BUCKET_NAME: stockpilot-trade-documents
+      WORKER_NAME: stockpilot-trade-api
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify required GitHub secrets
+        shell: bash
+        run: |
+          if [[ -z "$CLOUDFLARE_API_TOKEN" || -z "$CLOUDFLARE_ACCOUNT_ID" ]]; then
+            echo "::error::Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID under Settings > Secrets and variables > Actions before running this workflow."
+            exit 1
+          fi
+          echo "Cloudflare CI credentials are configured (values hidden)."
+
+      - name: Install Cloudflare Worker dependencies
+        working-directory: cloudflare/worker
+        run: npm install --no-audit --no-fund
+
+      - name: Create private R2 bucket if absent
+        run: node .github/scripts/ensure-r2-bucket.mjs
+
+      - name: Deploy Cloudflare Worker
+        working-directory: cloudflare/worker
+        run: npx wrangler deploy
+
+      - name: Configure one-time file signing secret
+        working-directory: cloudflare/worker
+        shell: bash
+        run: |
+          set -euo pipefail
+          SECRET_LIST="$(npx wrangler secret list --format json)"
+          if ! SECRET_LIST="$SECRET_LIST" node -e 'const x=JSON.parse(process.env.SECRET_LIST); process.exit(x.some(s=>s.name==="SIGNED_URL_SECRET")?0:1)'; then
+            echo "Generating signing secret directly in Cloudflare (never displayed)."
+            openssl rand -hex 32 | npx wrangler secret put SIGNED_URL_SECRET
+          else
+            echo "Existing Cloudflare signing secret preserved."
+          fi
+
+      - name: Verify deployed Worker health
+        run: node .github/scripts/verify-r2-worker.mjs
+
+      - name: Trigger a new GitHub Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run deploy-pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+          echo "Requested GitHub Pages deployment with the Cloudflare Worker API endpoint."
