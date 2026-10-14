@@ -4,6 +4,7 @@ import { Loading } from '@/components/Loading'
 import { RealtimeSync } from '@/components/RealtimeSync'
 import { useAuth } from '@/context/AuthContext'
 import { LoginPage } from '@/pages/LoginPage'
+import { PasswordSetupPage } from '@/pages/PasswordSetupPage'
 import { PublicInfoPage } from '@/pages/PublicInfoPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { ProductsPage } from '@/pages/ProductsPage'
@@ -45,6 +46,7 @@ function Protected() {
 export default function App() {
   return <Routes>
     <Route path="/login" element={<LoginPage />} />
+    <Route path="/reset-password" element={<PasswordSetupPage />} />
     <Route path="/info/:page" element={<PublicInfoPage />} />
     <Route element={<Protected />}>
       <Route index element={<DashboardPage />} />
