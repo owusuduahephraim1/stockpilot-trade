@@ -1,6 +1,13 @@
 name: StockPilot Trade Cloudflare R2 Worker
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deploy-cloudflare-r2.yml'
+      - 'cloudflare/worker/**'
+      - '.github/scripts/ensure-r2-bucket.mjs'
+      - '.github/scripts/verify-r2-worker.mjs'
   workflow_dispatch:
 
 permissions:
