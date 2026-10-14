@@ -2,11 +2,14 @@ import { supabase } from './supabase'
 
 async function headers() {
   const { data } = await supabase.auth.getSession()
-  const jwt = await (supabase.auth as unknown as { getJWTToken?: () => Promise<string | null> }).getJWTToken?.()\n  return { 'content-type': 'application/json', authorization: `Bearer ${jwt || data.session?.access_token || ''}` }
+  const jwt = await (supabase.auth as unknown as { getJWTToken?: () => Promise<string | null> }).getJWTToken?.()
+  return { 'content-type': 'application/json', authorization: `Bearer ${jwt || data.session?.access_token || ''}` }
 }
 
 export async function api<T>(url: string, init?: RequestInit): Promise<T> {
-  const base = (import.meta.env.VITE_API_BASE_URL || '').replace(/\\/$/, '')\n  if (!base) throw new Error('Cloudflare R2/API backend is not connected. Configure VITE_API_BASE_URL.')\n  const response = await fetch(`${base}${url}`, { ...init, headers: { ...(await headers()), ...(init?.headers || {}) } })
+  const base = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
+  if (!base) throw new Error('Cloudflare R2/API backend is not connected. Configure VITE_API_BASE_URL.')
+  const response = await fetch(`${base}${url}`, { ...init, headers: { ...(await headers()), ...(init?.headers || {}) } })
   const data = await response.json().catch(() => ({}))
   if (!response.ok) throw new Error(data.error || `Request failed (${response.status})`)
   return data as T
