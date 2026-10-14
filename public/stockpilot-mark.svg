@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="StockPilot">
+  <defs>
+    <linearGradient id="g" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#16e0b4"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="#0f2033"/>
+  <circle cx="32" cy="32" r="23" fill="url(#g)"/>
+  <g fill="none" stroke="#0f2033" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 25.5 32 20l9 5.5-9 5.3-9-5.3Z" fill="#eafff8"/>
+    <path d="M23 25.5v10.4l9 5.2 9-5.2V25.5M32 30.8v10.3"/>
+    <path d="M18.7 35.7 23 38.2M45.3 35.7 41 38.2"/>
+  </g>
+  <circle cx="18" cy="36" r="3.6" fill="#0f2033"/>
+  <circle cx="46" cy="36" r="3.6" fill="#0f2033"/>
+  <circle cx="32" cy="47" r="3.6" fill="#0f2033"/>
+  <circle cx="51" cy="14" r="4.2" fill="#f4b740" stroke="#0f2033" stroke-width="2"/>
+</svg>
