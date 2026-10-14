@@ -1,0 +1,41 @@
+{
+  "name": "stockpilot-trade",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "typecheck:functions": "tsc -p tsconfig.functions.json",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.864.0",
+    "@aws-sdk/s3-request-presigner": "^3.864.0",
+    "@supabase/supabase-js": "^2.56.1",
+    "@tanstack/react-query": "^5.85.5",
+    "@tanstack/react-query-devtools": "^5.85.5",
+    "@vitejs/plugin-react": "^5.0.2",
+    "clsx": "^2.1.1",
+    "jsbarcode": "^3.12.1",
+    "lucide-react": "^0.542.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2",
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.1.5",
+    "@neondatabase/neon-js": "^0.3.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260831.1",
+    "@types/jsbarcode": "^3.11.3",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.9.2",
+    "vite": "^7.1.3"
+  }
+}
