@@ -32,7 +32,7 @@ export function AppShell(){
   <button onClick={()=>setOpen(true)} className="fixed left-3 top-3 z-[90] rounded-lg bg-slate-950 p-2 text-white shadow-lg xl:hidden"><Menu className="h-5 w-5"/></button>
   <aside className={cn('fixed inset-y-0 left-0 z-50 w-56 border-r border-slate-800 bg-[#102033] text-white transition-transform xl:translate-x-0',open?'translate-x-0':'-translate-x-full')}>
    <div className="flex h-full min-h-0 flex-col">
-    <div className="shrink-0 border-b border-slate-700/70 px-4 py-4"><div className="flex items-center gap-2.5"><img src="/stockpilot-mark.svg" alt="" className="h-9 w-9 shrink-0 rounded-xl shadow-sm"/><div className="min-w-0"><div className="truncate text-sm font-bold">StockPilot</div><div className="text-[9px] font-semibold uppercase tracking-[.18em] text-slate-400">Control centre</div></div></div></div>
+    <div className="shrink-0 border-b border-slate-700/70 px-4 py-4"><div className="flex items-center gap-2.5"><img src={`${import.meta.env.BASE_URL}stockpilot-mark.svg`} alt="StockPilot logo" className="h-9 w-9 shrink-0 rounded-xl shadow-sm"/><div className="min-w-0"><div className="truncate text-sm font-bold">StockPilot</div><div className="text-[9px] font-semibold uppercase tracking-[.18em] text-slate-400">Control centre</div></div></div></div>
     <nav className="workspace-scrollbar min-h-0 flex-1 overflow-y-auto px-3 py-4">
       {section('Overview',overview)}
       {section('Operations',operations)}
