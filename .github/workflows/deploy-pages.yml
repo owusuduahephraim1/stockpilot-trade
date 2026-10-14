@@ -24,11 +24,17 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Resolve optional Cloudflare R2 Worker address
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          OVERRIDE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+        run: node .github/scripts/resolve-worker-url.mjs
+
       - name: Build Vite frontend
         env:
           VITE_NEON_AUTH_URL: https://ep-orange-bar-b4kev17j.neonauth.c-6.us-east-2.aws.neon.tech/neondb/auth
           VITE_NEON_DATA_API_URL: https://ep-orange-bar-b4kev17j.apirest.c-6.us-east-2.aws.neon.tech/neondb/rest/v1
-          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
         run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
