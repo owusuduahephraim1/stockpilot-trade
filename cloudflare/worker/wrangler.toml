@@ -1,0 +1,10 @@
+name = "stockpilot-trade-api"
+main = "src/index.ts"
+compatibility_date = "2026-10-14"
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "stockpilot-trade-documents"
+[vars]
+ALLOWED_ORIGIN = "https://owusuduahephraim1.github.io"
+NEON_DATA_API_URL = "https://ep-orange-bar-b4kev17j.apirest.c-6.us-east-2.aws.neon.tech/neondb/rest/v1"
+NEON_AUTH_JWKS_URL = "https://ep-orange-bar-b4kev17j.neonauth.c-6.us-east-2.aws.neon.tech/neondb/auth/.well-known/jwks.json"

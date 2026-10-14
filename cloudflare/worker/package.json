@@ -1,0 +1,1 @@
+{"name":"stockpilot-trade-api","private":true,"type":"module","scripts":{"dev":"wrangler dev","deploy":"wrangler deploy"},"dependencies":{"jose":"^6.1.0"},"devDependencies":{"wrangler":"^4.45.0","@cloudflare/workers-types":"^5.20260831.1","typescript":"~5.9.2"}}
